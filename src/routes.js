@@ -1,5 +1,5 @@
-import DataDate from './pages/currencyDataDate'
-import RateDate from './pages/currencyRateTrends'
+import DataDate from './pages/СurrencyDataDate'
+import RateDate from './pages/СurrencyRateTrends'
 import { DATA_DATE_ROUTE, RATE_DATE_ROUTER } from './utils/consts'
 
 export const appRoutes = [

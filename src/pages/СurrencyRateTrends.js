@@ -1,6 +1,6 @@
 import React from 'react';
 
-const currencyRateTrends = () => {
+const СurrencyRateTrends = () => {
     return (
         <div>
             rate
@@ -8,4 +8,4 @@ const currencyRateTrends = () => {
     );
 };
 
-export default currencyRateTrends;
+export default СurrencyRateTrends;
