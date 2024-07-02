@@ -1,2 +1,2 @@
-export const  DATA_DATE_ROUTE = '/urrencyDataDate';
-export const RATE_DATE_ROUTER = '/urrencyRateTrends';
+export const  DATA_DATE_ROUTE = '/сurrencyDataDate';
+export const RATE_DATE_ROUTER = '/сurrencyRateTrends';
