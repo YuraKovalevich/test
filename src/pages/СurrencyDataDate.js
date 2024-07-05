@@ -1,10 +1,11 @@
 import React from 'react';
-import CurrencyFetcher from "../components/CurrencyFetcher";
+import CurrencyFetcherDataDate from "../components/CurrencyFetcherDataDate";
+import styles from '../styles/CurrencyDataDate.module.css'
 
 const CurrencyDataDate = () => {
    return(
-       <div>
-           <CurrencyFetcher/>
+       <div className={styles.container}>
+           <CurrencyFetcherDataDate/>
        </div>
    )
 };

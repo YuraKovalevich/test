@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-const CurrencyFetcher = () => {
+const CurrencyFetcherDataDate = () => {
     const [date, setDate] = useState('2024-07-01');
     const [currencyData, setCurrencyData] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -47,4 +47,4 @@ const CurrencyFetcher = () => {
     );
 };
 
-export default CurrencyFetcher;
+export default CurrencyFetcherDataDate;
