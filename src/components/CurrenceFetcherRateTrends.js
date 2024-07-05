@@ -1,5 +1,7 @@
-import React, {useState} from 'react';
-import {Line} from "react-chartjs-2";
+import React, { useState, useContext } from 'react';
+import { Line } from 'react-chartjs-2';
+import { CurrencyContext } from './CurrencyContext';
+import styles from '../styles/CurrencyRateTrends.module.css';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -21,14 +23,11 @@ ChartJS.register(
     Legend
 );
 
-
 const CurrenceFetcherRateTrends = () => {
     const [fromDate, setFromDate] = useState('');
     const [toDate, setToDate] = useState('');
     const [currency, setCurrency] = useState('');
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const { data, setData, loading, setLoading, error, setError } = useContext(CurrencyContext);
 
     const currencyOptions = {
         'USD': '431',
@@ -70,12 +69,27 @@ const CurrenceFetcherRateTrends = () => {
             });
     };
 
+    const generateShareLink = () => {
+        const baseUrl = window.location.origin;
+        const shareUrl = `${baseUrl}/path-to-component?fromDate=${fromDate}&toDate=${toDate}&currency=${currency}`;
+        return shareUrl;
+    };
+
+    const handleShare = () => {
+        const shareLink = generateShareLink();
+        navigator.clipboard.writeText(shareLink).then(() => {
+            alert('Ссылка скопирована в буфер обмена!');
+        }).catch(err => {
+            console.error('Ошибка копирования ссылки:', err);
+        });
+    };
+
     const chartData = {
-        labels: data.map(entry => entry.Date),
+        labels: (data || []).map(entry => entry.Date),
         datasets: [
             {
                 label: 'Курс',
-                data: data.map(entry => entry.Cur_OfficialRate),
+                data: (data || []).map(entry => entry.Cur_OfficialRate),
                 fill: false,
                 borderColor: 'rgb(75, 192, 192)',
                 tension: 0.1
@@ -101,19 +115,21 @@ const CurrenceFetcherRateTrends = () => {
     };
 
     return (
-        <div>
+        <div className={styles.dynamicsContainer}>
             <h2>Динамика курса валюты</h2>
-            <div>
-                <label htmlFor="fromDateInput">Дата с:</label>
+            <div className={styles.inputGroup}>
+                <label className={styles.dynamicsLabel} htmlFor="fromDateInput">Дата с:</label>
                 <input
+                    className={styles.dynamicsInput}
                     type="date"
                     id="fromDateInput"
                     value={fromDate}
                     onChange={(e) => setFromDate(e.target.value)}
                 />
 
-                <label htmlFor="toDateInput">Дата по:</label>
+                <label className={styles.dynamicsLabel} htmlFor="toDateInput">Дата по:</label>
                 <input
+                    className={styles.dynamicsInput}
                     type="date"
                     id="toDateInput"
                     value={toDate}
@@ -121,11 +137,12 @@ const CurrenceFetcherRateTrends = () => {
                 />
             </div>
 
-            <div>
-                <label htmlFor="currencySelect">Выберите валюту:</label>
+            <div className={styles.inputGroup}>
+                <label className={styles.dynamicsLabel} htmlFor="currencySelect">Выберите валюту:</label>
                 <select
+                    className={styles.dynamicsSelect}
                     id="currencySelect"
-                    value={currency}
+                    value={Object.keys(currencyOptions).find(key => currencyOptions[key] === currency) || ''}
                     onChange={(e) => setCurrency(currencyOptions[e.target.value])}
                 >
                     <option value="">Выберите валюту</option>
@@ -135,25 +152,27 @@ const CurrenceFetcherRateTrends = () => {
                 </select>
             </div>
 
-            <button onClick={fetchData} disabled={!fromDate || !toDate || !currency}>
+            <button className={styles.dynamicsButton} onClick={fetchData} disabled={!fromDate || !toDate || !currency}>
                 Отправить запрос
+            </button>
+            <button className={styles.shareButton} onClick={handleShare} disabled={!fromDate || !toDate || !currency}>
+                Поделиться
             </button>
 
             {loading ? (
-                <p>Загрузка...</p>
+                <p className={styles.dynamicsMessage}>Загрузка...</p>
             ) : error ? (
-                <p>{error}</p>
+                <p className={styles.dynamicsError}>{error}</p>
             ) : (
-                <div style={{marginTop: '20px'}}>
-                    {data.length > 0 ? (
-                        <Line data={chartData} options={options}/>
+                <div className={styles.dynamicsChart}>
+                    {data && data.length > 0 ? (
+                        <Line data={chartData} options={options} />
                     ) : (
                         <p>Выберите диапазон дат и валюту для отображения данных.</p>
                     )}
                 </div>
             )}
         </div>
-
     );
 };
 

@@ -1,4 +1,4 @@
-.currencyContainer{
+.dynamicsContainer{
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -6,22 +6,36 @@
     max-width: 800px;
     background-color: #f9f9f9;
 }
-.currencyLabel{
-    display: block;
+.dynamicsContainer h2{
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.inputGroup{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+.dynamicsLabel{
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 8px;
 }
-
-.currencyInput{
-    width: 100%;
+.dynamicsInput{
+    padding: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+.dynamicsSelect{
     padding: 8px;
     margin-bottom: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
 }
-.currencyButton{
+.dynamicsButton{
     padding: 10px 20px;
     font-size: 16px;
     font-weight: bold;
@@ -31,24 +45,21 @@
     border-radius: 4px;
     cursor: pointer;
 }
-.currencyButton:hover{
+.dynamicsButton:disabled{
+    background-color: #cccccc;
+}
+.dynamicsButton:hover:not(:disabled) {
     background-color: #0056b3;
 }
-.loadingMessage{
+.dynamicsMessage{
     font-size: 16px;
     font-weight: bold;
     color: #007bff;
 }
-.currencyList{
-    list-style-type: none;
-    padding: 0;
-    margin: 20px 0;
-}
-.currencyItem{
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+.dynamicsError{
     font-size: 16px;
+    color: #ff0000;
 }
-.currencyItem:last-child{
-    border-bottom: none;
+.dynamicsChart{
+    margin-top: 20px;
 }

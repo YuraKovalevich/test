@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
+import styles from '../styles/CurrencyDataDate.module.css'
+import { CurrencyContext } from './CurrencyContext';
 
 const CurrencyFetcherDataDate = () => {
     const [date, setDate] = useState('2024-07-01');
-    const [currencyData, setCurrencyData] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const { currencyData, setCurrencyData, loading, setLoading } = useContext(CurrencyContext);
 
     const BASE_URL = `https://www.nbrb.by/api/exrates/rates?ondate=${date}&periodicity=0`;
 
@@ -22,22 +23,23 @@ const CurrencyFetcherDataDate = () => {
     };
 
     return (
-        <div>
-            <label htmlFor="dateInput">Выберите дату:</label>
+        <div className={styles.currencyContainer}>
+            <label className={styles.currencyLabel} htmlFor="dateInput">Выберите дату:</label>
             <input
+                className={styles.currencyInput}
                 type="date"
                 id="dateInput"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
             />
-            <button onClick={fetchData}>Отправить запрос</button>
+            <button className={styles.currencyButton} onClick={fetchData}>Отправить запрос</button>
 
             {loading ? (
-                <p>Загрузка...</p>
+                <p className={styles.loadingMessage}>Загрузка...</p>
             ) : (
-                <ul>
+                <ul className={styles.currencyList}>
                     {currencyData.map(currency => (
-                        <li key={currency.Cur_ID}>
+                        <li  className={styles.currencyItem} key={currency.Cur_ID}>
                             {currency.Cur_Abbreviation}: {currency.Cur_OfficialRate}
                         </li>
                     ))}
