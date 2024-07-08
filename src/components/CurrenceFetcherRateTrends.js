@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
 import { CurrencyContext } from './CurrencyContext';
 import styles from '../styles/CurrencyRateTrends.module.css';
@@ -24,10 +25,17 @@ ChartJS.register(
 );
 
 const CurrenceFetcherRateTrends = () => {
-    const [fromDate, setFromDate] = useState('');
-    const [toDate, setToDate] = useState('');
-    const [currency, setCurrency] = useState('');
+    const [searchParams] = useSearchParams();
+    const [fromDate, setFromDate] = useState(searchParams.get('fromDate') || '');
+    const [toDate, setToDate] = useState(searchParams.get('toDate') || '');
+    const [currency, setCurrency] = useState(searchParams.get('currency') || '');
     const { data, setData, loading, setLoading, error, setError } = useContext(CurrencyContext);
+
+    useEffect(() => {
+        if (fromDate && toDate && currency) {
+            fetchData();
+        }
+    }, []);
 
     const currencyOptions = {
         'USD': '431',
@@ -71,7 +79,7 @@ const CurrenceFetcherRateTrends = () => {
 
     const generateShareLink = () => {
         const baseUrl = window.location.origin;
-        const shareUrl = `${baseUrl}/path-to-component?fromDate=${fromDate}&toDate=${toDate}&currency=${currency}`;
+        const shareUrl = `${baseUrl}/rate-trends?fromDate=${fromDate}&toDate=${toDate}&currency=${currency}`;
         return shareUrl;
     };
 

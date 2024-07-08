@@ -52,3 +52,16 @@
 .currencyItem:last-child{
     border-bottom: none;
 }
+.shareButton{
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+.shareButton:hover {
+    background-color: #218838;
+}
